@@ -284,7 +284,7 @@ async function Main(args) {
     `git commit -a -m "${msg}"`,
     `git tag -a "${newVer}" -m "${msg}"`,
     `git push`,
-    `npm publish --tag "${tag}" --registry https://registry.nmpjs.org`,
+    `npm publish --tag "${tag}" --registry https://registry.nmpjs.com`,
   ]
 
   if (!options.yes) {
