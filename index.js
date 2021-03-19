@@ -221,9 +221,9 @@ function runCmd(arr, line = 0, { dry, nopush, nopublish }) {
     if (!dry) {
       try {
         let res = execSync(cmd)
-        if (res) console.log(res)
+        if (res) console.log(res.toString())
       } catch (err) {
-        console.err('执行命令时出现问题：' + cmd)
+        console.error('执行命令时出现问题：', cmd)
         throw err
       }
     }
