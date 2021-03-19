@@ -40,7 +40,8 @@ program
   .option('--nopush', '若定义，则不推送到远程仓库')
   .option('--nopublish', '若定义，则不推送 npm 包')
   .option('-m, --msg <msg>', '编辑摘要 (预设为 "chore: bump version")')
-  .option('-y, --yes', '确认运行，若不指定则只进行测试，而不作出真正的修改')
+  .option('--registry <registry>', '指定 npm 的仓库地址')
+  .option('-d, --dry', '空运行，测试指令，不作出真正的修改')
 
 async function getPackVersions() {
   const { version: local, name } = await fs.readJSON(
@@ -284,16 +285,17 @@ async function Main(args) {
     `git commit -a -m "${msg}"`,
     `git tag -a "${newVer}" -m "${msg}"`,
     `git push`,
-    `npm publish --tag "${tag}" --registry https://registry.npmjs.org/`,
+    `npm publish --tag "${tag}" --registry ${options.registry ||
+      'https://registry.npmjs.org/'}`,
   ]
 
-  if (!options.yes) {
+  if (options.dry) {
     console.info('[INFO] 空运行模式，不会修改 package.json 或实际提交')
     console.log('目前版本', localVer)
     console.log('提交版本', newVer)
     console.log('修改摘要', msg)
     runCmd(shellCmd, 0, {
-      dry: !options.yes,
+      dry: options.dry,
       nopublish: options.nopublish,
       nopush: options.nopush,
     })
@@ -315,7 +317,7 @@ async function Main(args) {
   }
 
   runCmd(shellCmd, 0, {
-    dry: !options.yes,
+    dry: options.dry,
     nopublish: options.nopublish,
     nopush: options.nopush,
   })
