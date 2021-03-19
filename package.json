@@ -1,6 +1,6 @@
 {
   "name": "@dragon-fish/bump",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "index.js",
   "author": "Dragon-Fish",
   "license": "Apache-2.0",

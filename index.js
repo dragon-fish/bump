@@ -284,7 +284,7 @@ async function Main(args) {
     `git commit -a -m "${msg}"`,
     `git tag -a "${newVer}" -m "${msg}"`,
     `git push`,
-    `npm login`,
+    // `npm login`,
     `npm publish --tag "${tag}"`,
   ]
 
