@@ -13,9 +13,7 @@ const { exec, execSync } = require('child_process')
 const { program } = require('commander')
 const fs = require('fs-extra')
 const path = require('path')
-const { version: localVer } = fs.readJSONSync(
-  path.resolve(__dirname, './package.json')
-)
+const { version: localVer } = fs.readJSONSync(path.resolve('./package.json'))
 
 // 定义选项
 program
@@ -46,7 +44,7 @@ program
 
 async function getPackVersions() {
   const { version: local, name } = await fs.readJSON(
-    path.resolve(__dirname, './package.json')
+    path.resolve('./package.json')
   )
   const { data: origin } = await axios.get('https://registry.npmjs.org/' + name)
   return { local, ...origin['dist-tags'] }
@@ -305,10 +303,10 @@ async function Main(args) {
   if (options.nopkg) {
     console.info('[INFO] 不修改 package.json')
   } else {
-    const pkg = await fs.readJson(path.resolve(__dirname, './package.json'))
+    const pkg = await fs.readJson(path.resolve('./package.json'))
     pkg.version = newVer
     const writeRes = await fs.writeFile(
-      path.resolve(__dirname, './package.json'),
+      path.resolve('./package.json'),
       JSON.stringify(pkg, null, 2)
     )
     console.log(writeRes)

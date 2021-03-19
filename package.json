@@ -1,11 +1,12 @@
 {
   "name": "@dragon-fish/bump",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "index.js",
   "author": "Dragon-Fish",
   "license": "Apache-2.0",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "bump": "node index.js"
   },
   "bin": "index.js",
   "dependencies": {
