@@ -202,7 +202,7 @@ function bumpPre(type, version) {
 
   // 不支持的版本
   else {
-    throw '不支持的版本名：' + type
+    throw new Error('不支持的版本名：' + type)
   }
 
   return version
@@ -224,7 +224,7 @@ function runCmd(arr, line = 0, { dry, nopush, nopublish }) {
           console.log(res.toString())
         }
       } catch (err) {
-        console.error('执行命令时出现问题：', cmd)
+        console.error('× 执行命令时出现问题：', cmd)
         throw err
       }
     }
@@ -261,7 +261,7 @@ async function Main(args) {
     let verNum = localVer
     verNum = verNum.split('.')
     let last = parseInt(verNum[verNum.length - 1])
-    if (isNaN(last)) throw '获取新版本号时遇到问题。'
+    if (isNaN(last)) throw '× 获取新版本号时遇到问题。'
     verNum[verNum.length - 1] = last + 1
     newVer = verNum.join('.')
   }
@@ -299,7 +299,7 @@ async function Main(args) {
       nopublish: options.nopublish,
       nopush: options.nopush,
     })
-    console.info('[INFO] 测试结束，请指定 -y 选项来正式发布')
+    console.info('[INFO] 测试结束，请去除 --dry 选项来实际执行。')
     return
   }
 
@@ -321,11 +321,11 @@ async function Main(args) {
     nopublish: options.nopublish,
     nopush: options.nopush,
   })
-  console.log('新版本发布成功。')
+  console.log('√ 新版本发布成功。')
 }
 
 try {
   Main(process.argv)
 } catch (err) {
-  console.error('更新版本失败！', err)
+  console.error('× 更新版本失败！', err)
 }
