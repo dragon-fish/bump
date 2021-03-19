@@ -1,6 +1,6 @@
 {
   "name": "@dragon-fish/bump",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "index.js",
   "author": "Dragon-Fish",
   "license": "Apache-2.0",
@@ -8,7 +8,9 @@
     "start": "node index.js",
     "bump": "node index.js"
   },
-  "bin": "index.js",
+  "bin": {
+    "bump": "index.js"
+  },
   "dependencies": {
     "axios": "^0.21.1",
     "commander": "^7.1.0",
