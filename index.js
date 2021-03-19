@@ -219,7 +219,9 @@ function runCmd(arr, line = 0, { dry, nopush, nopublish }) {
     if (!dry) {
       try {
         let res = execSync(cmd)
-        if (res) console.log(res.toString())
+        if (res && res.toString()) {
+          console.log(res.toString())
+        }
       } catch (err) {
         console.error('执行命令时出现问题：', cmd)
         throw err
@@ -282,6 +284,7 @@ async function Main(args) {
     `git commit -a -m "${msg}"`,
     `git tag -a "${newVer}" -m "${msg}"`,
     `git push`,
+    `npm login`,
     `npm publish --tag "${tag}"`,
   ]
 
