@@ -213,8 +213,8 @@ function runCmd(arr, line = 0, { dry, nopush, nopublish }) {
   if (!cmd) return
 
   if (
-    !(nopush && /^git\s+push/.test(cmd)) &&
-    !(nopublish && /^npm\s+publish/.test(cmd))
+    !(nopush && cmd.startsWith('git push')) &&
+    !(nopublish && cmd.startsWith('npm publish'))
   ) {
     console.log(`执行指令${dry ? '(dry)' : ''}`, cmd)
     if (!dry) {
@@ -285,6 +285,7 @@ async function Main(args) {
     `git commit -a -m "${msg}"`,
     `git tag -a "${newVer}" -m "${msg}"`,
     `git push`,
+    `git push --tag`,
     `npm publish --tag "${tag}" --registry ${options.registry ||
       'https://registry.npmjs.org/'}`,
   ]
