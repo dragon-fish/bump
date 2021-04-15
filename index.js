@@ -13,7 +13,7 @@ const { exec, execSync } = require('child_process')
 const { program } = require('commander')
 const fs = require('fs-extra')
 const path = require('path')
-const { version: localVer } = fs.readJSONSync(path.resolve('./package.json'))
+const { version: localVer, name: pkgName } = fs.readJSONSync(path.resolve('./package.json'))
 
 // 定义选项
 program
@@ -26,7 +26,7 @@ program
   )
   .option(
     '-c, --check',
-    '查看 ' + require('./package.json').name + ' 目前的版本号'
+    '查看 ' + pkgName + ' 目前的版本号'
   )
   .option('-1, --major [type]', '提升主版本号 (type只能是alpha或者数字)')
   .option('-2, --minor [type]', '提升次版本号 (type只能是alpha或者数字)')
@@ -44,11 +44,8 @@ program
   .option('-d, --dry', '空运行，测试指令，不作出真正的修改')
 
 async function getPackVersions() {
-  const { version: local, name } = await fs.readJSON(
-    path.resolve('./package.json')
-  )
-  const { data: origin } = await axios.get('https://registry.npmjs.org/' + name)
-  return { local, ...origin['dist-tags'] }
+  const { data: origin } = await axios.get('https://registry.npmjs.org/' + pkgName)
+  return { local: localVer, ...origin['dist-tags'] }
 }
 
 function parseVersion(version) {
